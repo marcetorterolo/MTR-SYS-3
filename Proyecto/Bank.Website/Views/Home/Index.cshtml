@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h2>Usuarios del Sistema</h2>
+
+    <div class="row">
+        <div class="col-xs-12" id="bodyIndex">
+            @{Html.RenderAction("_Index");}
+        </div>
+    </div>
+</div>

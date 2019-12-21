@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBBank_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cuenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TipoId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Saldo" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoCuenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transferencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="CuentaIdOrigen" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CuentaIdDestino" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Monto" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha" Type="date" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cuenta_TipoCuenta">
+          <End Role="TipoCuenta" Type="Self.TipoCuenta" Multiplicity="1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoCuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cuenta">
+              <PropertyRef Name="TipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cuenta_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cuenta">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transferencia_CuentaDestino">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="Transferencia" Type="Self.Transferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transferencia">
+              <PropertyRef Name="CuentaIdDestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transferencia_CuentaOrigen">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="Transferencia" Type="Self.Transferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transferencia">
+              <PropertyRef Name="CuentaIdOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBBank_ModelStoreContainer">
+          <EntitySet Name="Cuenta" EntityType="Self.Cuenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoCuenta" EntityType="Self.TipoCuenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transferencia" EntityType="Self.Transferencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cuenta_TipoCuenta" Association="Self.FK_Cuenta_TipoCuenta">
+            <End Role="TipoCuenta" EntitySet="TipoCuenta" />
+            <End Role="Cuenta" EntitySet="Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cuenta_Usuario" Association="Self.FK_Cuenta_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cuenta" EntitySet="Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transferencia_CuentaDestino" Association="Self.FK_Transferencia_CuentaDestino">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Transferencia" EntitySet="Transferencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transferencia_CuentaOrigen" Association="Self.FK_Transferencia_CuentaOrigen">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Transferencia" EntitySet="Transferencia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBBank_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cuenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TipoId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Saldo" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TipoCuenta" Relationship="Self.FK_Cuenta_TipoCuenta" FromRole="Cuenta" ToRole="TipoCuenta" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Cuenta_Usuario" FromRole="Cuenta" ToRole="Usuario" />
+          <NavigationProperty Name="TrxDestino" Relationship="DBBank_Model.FK_Transferencia_CuentaDestino" FromRole="Cuenta" ToRole="Transferencia" />
+          <NavigationProperty Name="TrxOrigen" Relationship="DBBank_Model.FK_Transferencia_CuentaOrigen" FromRole="Cuenta" ToRole="Transferencia" />
+        </EntityType>
+        <EntityType Name="TipoCuenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cuentas" Relationship="Self.FK_Cuenta_TipoCuenta" FromRole="TipoCuenta" ToRole="Cuenta" />
+        </EntityType>
+        <EntityType Name="Transferencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CuentaIdOrigen" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CuentaIdDestino" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Monto" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CuentaDestino" Relationship="DBBank_Model.FK_Transferencia_CuentaDestino" FromRole="Transferencia" ToRole="Cuenta" />
+          <NavigationProperty Name="CuentaOrigen" Relationship="DBBank_Model.FK_Transferencia_CuentaOrigen" FromRole="Transferencia" ToRole="Cuenta" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cuentas" Relationship="Self.FK_Cuenta_Usuario" FromRole="Usuario" ToRole="Cuenta" />
+        </EntityType>
+        <Association Name="FK_Cuenta_TipoCuenta">
+          <End Role="TipoCuenta" Type="Self.TipoCuenta" Multiplicity="1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoCuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cuenta">
+              <PropertyRef Name="TipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cuenta_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cuenta">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBBank_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cuenta" EntityType="Self.Cuenta" />
+          <EntitySet Name="TipoCuenta" EntityType="Self.TipoCuenta" />
+          <EntitySet Name="Transferencia" EntityType="Self.Transferencia" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Cuenta_TipoCuenta" Association="Self.FK_Cuenta_TipoCuenta">
+            <End Role="TipoCuenta" EntitySet="TipoCuenta" />
+            <End Role="Cuenta" EntitySet="Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cuenta_Usuario" Association="Self.FK_Cuenta_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cuenta" EntitySet="Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transferencia_CuentaDestino" Association="DBBank_Model.FK_Transferencia_CuentaDestino">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Transferencia" EntitySet="Transferencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transferencia_CuentaOrigen" Association="DBBank_Model.FK_Transferencia_CuentaOrigen">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Transferencia" EntitySet="Transferencia" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Transferencia_CuentaDestino">
+          <End Type="DBBank_Model.Cuenta" Role="Cuenta" Multiplicity="1" />
+          <End Type="DBBank_Model.Transferencia" Role="Transferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transferencia">
+              <PropertyRef Name="CuentaIdDestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transferencia_CuentaOrigen">
+          <End Type="DBBank_Model.Cuenta" Role="Cuenta" Multiplicity="1" />
+          <End Type="DBBank_Model.Transferencia" Role="Transferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transferencia">
+              <PropertyRef Name="CuentaIdOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBBank_ModelStoreContainer" CdmEntityContainer="DBBank_Entities">
+          <EntitySetMapping Name="Cuenta">
+            <EntityTypeMapping TypeName="DBBank_Model.Cuenta">
+              <MappingFragment StoreEntitySet="Cuenta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TipoId" ColumnName="TipoId" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoCuenta">
+            <EntityTypeMapping TypeName="DBBank_Model.TipoCuenta">
+              <MappingFragment StoreEntitySet="TipoCuenta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transferencia">
+            <EntityTypeMapping TypeName="DBBank_Model.Transferencia">
+              <MappingFragment StoreEntitySet="Transferencia">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CuentaIdOrigen" ColumnName="CuentaIdOrigen" />
+                <ScalarProperty Name="CuentaIdDestino" ColumnName="CuentaIdDestino" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="DBBank_Model.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

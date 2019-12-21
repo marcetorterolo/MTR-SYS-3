@@ -1,0 +1,88 @@
+﻿@model Transferencia
+@{
+    ViewBag.Title = "Transferencia";
+}
+
+<div class="jumbotron">
+    <h2>Transferir</h2>
+
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdUsuario)
+        @Html.HiddenFor(model => model.NombreUsuario)
+
+        //Datos
+        <div class="form-horizontal">
+            @*Usuario*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            @*Cuenta Origen*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.CuentaIdOrigen, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CuentaIdOrigen, new SelectList((IEnumerable<SelectListItem>)ViewData["accounts"], "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CuentaIdOrigen, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Cuenta Destino*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.CuentaIdDestino, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CuentaIdDestino, new SelectList((IEnumerable<SelectListItem>)ViewData["accounts"], "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CuentaIdDestino, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Monto*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Monto, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Monto, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Monto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Descripcion*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        //Error
+        <div class="form-horizontal">
+            @if (Model != null)
+            {
+                if (Model.ErrorCode > 0)
+                {
+                    <div id="dialogErrorMessage" style="text-align: center;" class="alertMessageSuccess">
+                        @Html.DisplayFor(model => model.ErrorMessage)
+                    </div>
+                }
+                else if (Model.ErrorCode < 0)
+                {
+                    <div id="dialogSuccessMessage" style="text-align: center;" class="alertMessageError">
+                        @Html.DisplayFor(model => model.ErrorMessage)
+                    </div>
+                }
+            }
+        </div>
+        
+        //Botones
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-10">
+                    <input type="submit" value="Confirmar" class="btn btn-success" id="btnConfirmar" style="margin-right: 6%;" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<a class="fa fa-angle-double-left" title="Regresar" href="@Url.Action("Index", "Home")"> Regresar</a>
+

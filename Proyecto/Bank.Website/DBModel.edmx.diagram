@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cdf54bf12cf04f8da373e9976e313272" Name="Diagram1">
+        <EntityTypeShape EntityType="DBBank_Model.Cuenta" Width="1.5" PointX="2.875" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBank_Model.TipoCuenta" Width="1.5" PointX="0.625" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBank_Model.Transferencia" Width="1.5" PointX="2.875" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBank_Model.Usuario" Width="1.5" PointX="5" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="DBBank_Model.FK_Cuenta_TipoCuenta" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBank_Model.FK_Cuenta_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBank_Model.FK_Transferencia_CuentaDestino" />
+        <AssociationConnector Association="DBBank_Model.FK_Transferencia_CuentaOrigen" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

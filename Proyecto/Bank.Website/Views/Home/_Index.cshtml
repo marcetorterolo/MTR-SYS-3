@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Usuario>
+
+@if (Model != null)
+{
+    <table class="table table-striped table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                <th>Cantidad Cuentas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@item.Cuentas.Count</td>
+                <td>
+                    @if (item.Cuentas.Count > 0)
+                    {
+                        <a class="fas fa-hand-holding-usd fa-lg" title="Ver Cuentas" href="@Url.Action("Cuentas", "Cuenta", new { pIdUser = item.Id })"></a>
+                        if (@item.Cuentas.Count > 1)
+                        {
+                            <a class="fas fa-exchange-alt fa-lg" title="Transferir" href="@Url.Action("Transferir", "Transferencia", new { pIdUser = item.Id })"></a>
+                            <a class="fas fa-history fa-lg" title="Historico" href="@Url.Action("Historico", "Transferencia", new { pIdUser = item.Id })"></a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
